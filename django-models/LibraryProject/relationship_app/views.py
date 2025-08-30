@@ -19,3 +19,31 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['books'] = self.object.books.all()
         return context
+    
+
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+
+
+def register_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # log the user in right after registration
+            return redirect("book_list")  # redirect to your existing book list view
+    else:
+        form = UserCreationForm()
+    return render(request, "relationship_app/register.html", {"form": form})
+
+# Login view (using Django’s built-in AuthenticationForm)
+class CustomLoginView(LoginView):
+    template_name = "relationship_app/login.html"
+    authentication_form = AuthenticationForm
+
+class CustomLogoutView(LogoutView):
+    template_name = "relationship_app/logout.html"
+
