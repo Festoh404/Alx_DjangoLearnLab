@@ -1,7 +1,7 @@
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Library, Book
-from django.contrib.auth.decorators import user_passes_test, permission_required
+from django.contrib.auth.decorators import permission_required, user_passes_test
 
 def list_books(request):
     """Display all books and their authors"""
