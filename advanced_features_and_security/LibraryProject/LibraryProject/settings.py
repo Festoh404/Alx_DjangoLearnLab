@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = "book_list"
 LOGOUT_REDIRECT_URL = "login"
-AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "bookshelf.CustomUser"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
