@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book
+from django.db.models import Q
 
 @permission_required("relationship_app.can_view", raise_exception=True)
 def list_books(request):
@@ -24,4 +25,23 @@ def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     # Logic for deleting a book
     pass
+
+def book_list(request):
+    """Secure search using Django ORM (prevents SQL injection)"""
+    books = Book.objects.all()
+    
+    search_query = request.GET.get('q', '').strip()
+    if search_query:
+        # Safe query using Q objects
+        books = books.filter(
+            Q(title__icontains=search_query) |
+            Q(author__icontains=search_query)
+        )
+    
+    return render(request, 'bookshelf/book_list.html', {'books': books})
+
+def get_book(request, book_id):
+    """Safe object retrieval"""
+    book = get_object_or_404(Book, id=book_id)
+    return render(request, 'bookshelf/book_detail.html', {'book': book})
 
