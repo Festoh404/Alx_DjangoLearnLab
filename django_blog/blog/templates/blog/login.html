@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% block content %}
+    <h2>Log In</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit">Log In</button>
+    </form>
+    <small>Need an account? <a href="{% url 'register' %}">Sign Up Now</a></small>
+{% endblock content %}

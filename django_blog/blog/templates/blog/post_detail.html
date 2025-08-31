@@ -1,0 +1,16 @@
+
+{% block content %}
+    <article>
+        <h2>{{ object.title }}</h2>
+        <p>{{ object.content }}</p>
+        <small>
+            Published on {{ object.published_date|date:"F d, Y" }} by {{ object.author.username }}
+        </small>
+        {% if user.is_authenticated and user.id == object.author.id %}
+            <div>
+                <a href="{% url 'post_update' object.pk %}">Edit</a>
+                <a href="{% url 'post_delete' object.pk %}">Delete</a>
+            </div>
+        {% endif %}
+    </article>
+{% endblock content %}
