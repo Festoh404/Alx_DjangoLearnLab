@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book List</title>
+</head>
+
+<body>
+    <h1>Books</h1>
+
+    <!-- Search form with CSRF protection (if it's a POST form) -->
+    <form method="get"> <!-- Changed to GET since search typically uses GET -->
+        <input type="text" name="q" placeholder="Search books..." value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        {% for book in books %}
+        <li>{{ book.title }} by {{ book.author }}</li>
+        {% empty %}
+        <li>No books found.</li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
